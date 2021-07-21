@@ -130,7 +130,7 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 			wp_send_json_error(
 				[
 					'error' => [
-						'message' => $e->getMessage(),
+						'message' => WC_Payments_Utils::get_redacted_error_message( $e ),
 					],
 				]
 			);
@@ -198,7 +198,7 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 			wp_send_json_error(
 				[
 					'error' => [
-						'message' => $e->getMessage(),
+						'message' => WC_Payments_Utils::get_redacted_error_message( $e ),
 					],
 				]
 			);
@@ -258,7 +258,7 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 			wp_send_json_error(
 				[
 					'error' => [
-						'message' => $e->getMessage(),
+						'message' => WC_Payments_Utils::get_redacted_error_message( $e ),
 					],
 				]
 			);
@@ -516,7 +516,7 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 			/* translators: localized exception message */
 			$order->update_status( 'failed', sprintf( __( 'UPE payment failed: %s', 'woocommerce-payments' ), $e->getMessage() ) );
 
-			wc_add_notice( $e->getMessage(), 'error' );
+			wc_add_notice( WC_Payments_Utils::get_redacted_error_message( $e ), 'error' );
 			wp_safe_redirect( wc_get_checkout_url() );
 			exit;
 		}
@@ -599,7 +599,7 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 
 			return $payment_method->get_payment_token_for_user( $user, $payment_method_id );
 		} catch ( Exception $e ) {
-			wc_add_notice( $e->getMessage(), 'error', [ 'icon' => 'error' ] );
+			wc_add_notice( WC_Payments_Utils::get_redacted_error_message( $e ), 'error', [ 'icon' => 'error' ] );
 			Logger::log( 'Error when adding payment method: ' . $e->getMessage() );
 			return [
 				'result' => 'error',
@@ -754,7 +754,7 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 			wp_send_json_error(
 				[
 					'error' => [
-						'message' => $e->getMessage(),
+						'message' => WC_Payments_Utils::get_redacted_error_message( $e ),
 					],
 				]
 			);
